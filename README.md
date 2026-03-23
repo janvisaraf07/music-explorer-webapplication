@@ -1,5 +1,4 @@
-# music-explorer-webapplication
-
+# strumly-Music Explorer
 
 ## Project Idea-
 
