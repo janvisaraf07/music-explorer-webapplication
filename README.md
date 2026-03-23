@@ -11,7 +11,7 @@ The purpose of this project is to practice JavaScript concepts like API integrat
 
 ## API Used-
 
-I will use the iTunes Search API to fetch music data. It provides information about songs, artists, albums, and previews.
+I will use the iTunes Search API to fetch music data. It provides information about songs, artists, albums, and previews.Here is its link https://itunes.apple.com/search?term=arijit&entity=song
 
 ## Features-
 
