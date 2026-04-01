@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Strumly</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
+  <div class="container">
+
+    <h1 class="logo">strum<span>ly</span></h1>
+    <p class="subtitle">Discover, preview & save music</p>
+
+    <div class="search-box">
+      <input id="search" type="text" placeholder="Search songs or artists..." />
+      <button onclick="handleSearch()">Search</button>
+    </div>
+
+    <div class="controls">
+      <button onclick="sortSongs('name')">Sort Name</button>
+      <button onclick="sortSongs('artist')">Sort Artist</button>
+      <button onclick="sortSongs('date')">Sort Date</button>
+      <button onclick="showFavorites()">Favorites</button>
+    </div>
+
+    <div id="loader" class="loader">Loading...</div>
+
+    <div id="songs" class="grid"></div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
