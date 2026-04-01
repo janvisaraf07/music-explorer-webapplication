@@ -1,1 +1,84 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #1a0000, #000);
+  color: white;
+}
 
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.logo {
+  font-size: 48px;
+}
+
+.logo span {
+  color: red;
+}
+
+.subtitle {
+  color: gray;
+}
+
+.search-box {
+  margin: 20px;
+}
+
+input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 10px;
+  border: none;
+}
+
+button {
+  padding: 10px 15px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #222;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: red;
+  transform: scale(1.1);
+}
+
+.controls {
+  margin: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 15px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255,0,0,0.3);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 15px;
+}
+
+.loader {
+  display: none;
+  margin: 20px;
+}
