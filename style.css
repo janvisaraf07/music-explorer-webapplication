@@ -1,84 +1,121 @@
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #1a0000, #000);
+  font-family: Arial;
+  background: #111;
   color: white;
-}
-
-.container {
   text-align: center;
-  padding: 20px;
+  margin: 0;
 }
 
-.logo {
-  font-size: 48px;
+/* CONTAINER */
+.container {
+  padding: 15px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-.logo span {
+/* HEADING */
+h1 {
+  margin-top: 20px;
+}
+
+h1 span {
   color: red;
 }
 
-.subtitle {
-  color: gray;
-}
-
-.search-box {
-  margin: 20px;
-}
-
+/* INPUT and SEARCH */
 input {
   padding: 10px;
-  width: 250px;
-  border-radius: 10px;
+  width: 60%;
+  max-width: 300px;
+  border-radius: 5px;
   border: none;
+  margin-bottom: 10px;
 }
 
+/* BUTTONS */
 button {
-  padding: 10px 15px;
-  margin-left: 10px;
-  border: none;
-  border-radius: 10px;
-  background: #222;
-  color: white;
+  padding: 8px 12px;
+  margin: 5px;
   cursor: pointer;
-  transition: 0.3s;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
 }
 
 button:hover {
-  background: red;
-  transform: scale(1.1);
+  background: rgb(143, 121, 121);
 }
 
-.controls {
-  margin: 20px;
-}
-
-.grid {
+/* SONG GRID */
+#songs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  padding: 10px;
 }
 
+/* CARD */
 .card {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 15px;
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255,0,0,0.3);
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%; /* IMPORTANT */
+  box-sizing: border-box;
 }
 
 .card img {
   width: 100%;
-  border-radius: 15px;
+  border-radius: 8px;
 }
 
-.loader {
-  display: none;
-  margin: 20px;
+audio {
+  width: 100%;
+  margin-top: 5px;
+}
+
+/* BUTTON ROW */
+.btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+/* YOUTUBE BUTTON */
+.btns a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: rgb(142, 122, 122);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+
+.btns a:hover {
+  box-shadow: 0 0 8px red;
+  transition: 0.3s;
+}
+
+/* RESPONSIV */
+@media (max-width: 600px) {
+  input {
+    width: 90%;
+  }
+
+  button {
+    width: 90%;
+    margin: 5px auto;
+    display: block;
+  }
+
+  .btns {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .btns a {
+    width: 100%;
+  }
 }
