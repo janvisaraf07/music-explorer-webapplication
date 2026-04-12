@@ -44,7 +44,7 @@ function renderSongs(songs) {
       audio = "<p>No preview</p>";
     }
 
-    // check favorite (UPDATED)
+    // check favorite
     var isFav = favs.some(function (f) {
       return f.trackId === song.trackId;
     });
@@ -75,7 +75,7 @@ function playSong(audio) {
   currentAudio = audio;
 }
 
-// SORT A-Z
+// SORT AtoZ
 function sortSongs(type) {
   var sorted = allSongs.slice();
 
@@ -98,7 +98,7 @@ function sortSongs(type) {
   renderSongs(sorted);
 }
 
-// FAVORITES (UPDATED - store full song object)
+// FAVORITES
 function addFav(id) {
   var favs = JSON.parse(localStorage.getItem("favs")) || [];
 
@@ -111,16 +111,16 @@ function addFav(id) {
   });
 
   if (index > -1) {
-    favs.splice(index, 1); // remove
+    favs.splice(index, 1); 
   } else {
-    favs.push(song); // add full object
+    favs.push(song); 
   }
 
   localStorage.setItem("favs", JSON.stringify(favs));
   renderSongs(allSongs);
 }
 
-// SHOW FAVORITES (UPDATED)
+// SHOW FAVORITES
 function showFavorites() {
   var favs = JSON.parse(localStorage.getItem("favs")) || [];
   renderSongs(favs);
