@@ -1,96 +1,127 @@
-const API_URL = "https://itunes.apple.com/search";
-
-let allSongs = [];
-let currentAudio = null;
-
-// FETCH SONGS
-async function fetchSongs(query) {
-  showLoader(true);
-  try {
-    const res = await fetch(`${API_URL}?term=${query}&entity=song&limit=40`);
-    const data = await res.json();
-    allSongs = data.results;
-    renderSongs(allSongs);
-  } catch (err) {
-    console.error(err);
-  }
-  showLoader(false);
-}
+var API_URL = "https://itunes.apple.com/search";
+var allSongs = [];
+var currentAudio = null;
 
 // SEARCH
 function handleSearch() {
-  const query = document.getElementById("search").value;
-  if (query) fetchSongs(query);
+  var query = document.getElementById("search").value;
+
+  fetch(API_URL + "?term=" + encodeURIComponent(query) + "&entity=song&limit=12")
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      allSongs = data.results;
+      renderSongs(allSongs);
+    })
+    .catch(function (error) {
+      console.log("Error:", error);
+    });
 }
 
-// RENDER SONGS
+// SHOW SONGS
 function renderSongs(songs) {
-  const container = document.getElementById("songs");
+  var container = document.getElementById("songs");
+  container.innerHTML = "";
 
-  container.innerHTML = songs.map(song => `
-    <div class="card">
-      <img src="${song.artworkUrl100}" />
-      <h3>${song.trackName}</h3>
-      <p>${song.artistName}</p>
+  if (songs.length === 0) {
+    container.innerHTML = "<p>No songs found</p>";
+    return;
+  }
 
-      <audio controls 
-        onplay="handlePlay(this)" 
-        src="${song.previewUrl}">
-      </audio>
+  var favs = JSON.parse(localStorage.getItem("favs")) || [];
 
-      <button onclick="toggleFavorite(${song.trackId})">
-        ❤️
-      </button>
-    </div>
-  `).join("");
+  for (var i = 0; i < songs.length; i++) {
+    var song = songs[i];
+
+    var div = document.createElement("div");
+    div.className = "card";
+
+    var audio = "";
+    if (song.previewUrl) {
+      audio = "<audio controls onplay='playSong(this)' src='" + song.previewUrl + "'></audio>";
+    } else {
+      audio = "<p>No preview</p>";
+    }
+
+    // check favorite (UPDATED)
+    var isFav = favs.some(function (f) {
+      return f.trackId === song.trackId;
+    });
+
+    div.innerHTML =
+      "<img src='" + song.artworkUrl100 + "'>" +
+      "<h3>" + song.trackName + "</h3>" +
+      "<p>" + song.artistName + "</p>" +
+      audio +
+
+      "<div class='btns'>" +
+      "<button onclick='addFav(" + song.trackId + ")'>" +
+      (isFav ? "❤️" : "🤍") + "</button>" +
+
+      "<a target='_blank' href='https://www.youtube.com/results?search_query=" +
+      song.trackName + " " + song.artistName + "'>▶ Full</a>" +
+      "</div>";
+
+    container.appendChild(div);
+  }
 }
 
-// SINGLE AUDIO CONTROL
-function handlePlay(audio) {
-  if (currentAudio && currentAudio !== audio) {
+// PLAY ONE SONG
+function playSong(audio) {
+  if (currentAudio != null && currentAudio !== audio) {
     currentAudio.pause();
   }
   currentAudio = audio;
 }
 
-// SORTING
+// SORT A-Z
 function sortSongs(type) {
-  let sorted = [...allSongs];
+  var sorted = allSongs.slice();
 
-  if (type === "name") {
-    sorted.sort((a, b) => a.trackName.localeCompare(b.trackName));
-  }
-  if (type === "artist") {
-    sorted.sort((a, b) => a.artistName.localeCompare(b.artistName));
-  }
-  if (type === "date") {
-    sorted.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
-  }
+  sorted.sort(function (a, b) {
+    var x, y;
+
+    if (type === "name") {
+      x = a.trackName.toLowerCase();
+      y = b.trackName.toLowerCase();
+    } else {
+      x = a.artistName.toLowerCase();
+      y = b.artistName.toLowerCase();
+    }
+
+    if (x > y) return 1;
+    if (x < y) return -1;
+    return 0;
+  });
 
   renderSongs(sorted);
 }
 
-// FAVORITES
-function toggleFavorite(id) {
-  let favs = JSON.parse(localStorage.getItem("favs")) || [];
+// FAVORITES (UPDATED - store full song object)
+function addFav(id) {
+  var favs = JSON.parse(localStorage.getItem("favs")) || [];
 
-  if (favs.includes(id)) {
-    favs = favs.filter(f => f !== id);
+  var song = allSongs.find(function (s) {
+    return s.trackId === id;
+  });
+
+  var index = favs.findIndex(function (f) {
+    return f.trackId === id;
+  });
+
+  if (index > -1) {
+    favs.splice(index, 1); // remove
   } else {
-    favs.push(id);
+    favs.push(song); // add full object
   }
 
   localStorage.setItem("favs", JSON.stringify(favs));
+  renderSongs(allSongs);
 }
 
-// SHOW FAVORITES
+// SHOW FAVORITES (UPDATED)
 function showFavorites() {
-  let favs = JSON.parse(localStorage.getItem("favs")) || [];
-  const favSongs = allSongs.filter(song => favs.includes(song.trackId));
-  renderSongs(favSongs);
-}
-
-// LOADER
-function showLoader(show) {
-  document.getElementById("loader").style.display = show ? "block" : "none";
+  var favs = JSON.parse(localStorage.getItem("favs")) || [];
+  renderSongs(favs);
 }
