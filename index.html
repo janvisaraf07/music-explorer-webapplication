@@ -1,35 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Strumly</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Strumly 🎵</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <h1 class="logo">strum<span>ly</span></h1>
-    <p class="subtitle">Discover, preview & save music</p>
+ <h1>Strum<span>ly</span> 🎵</h1>
 
-    <div class="search-box">
-      <input id="search" type="text" placeholder="Search songs or artists..." />
-      <button onclick="handleSearch()">Search</button>
-    </div>
+  <input id="search" placeholder="Search songs">
+  <button onclick="handleSearch()">Search</button>
 
-    <div class="controls">
-      <button onclick="sortSongs('name')">Sort Name</button>
-      <button onclick="sortSongs('artist')">Sort Artist</button>
-      <button onclick="sortSongs('date')">Sort Date</button>
-      <button onclick="showFavorites()">Favorites</button>
-    </div>
+  <br><br>
 
-    <div id="loader" class="loader">Loading...</div>
+  <button onclick="sortSongs('name')">Sort A-Z (Name)</button>
+  <button onclick="sortSongs('artist')">Sort A-Z (Artist)</button>
+  <button onclick="showFavorites()">Favorites</button>
 
-    <div id="songs" class="grid"></div>
+  <p id="nowPlaying">Now Playing: None</p>
 
-  </div>
+  <div id="songs"></div>
 
-  <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
